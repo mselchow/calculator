@@ -46,6 +46,19 @@ body {
   margin: 0;
 }
 
+.func {
+  background-color: #587792;
+  color: white;
+}
+
+.num {
+  background-color: #8db1ab;
+}
+
+.op {
+  background-color: #f2ed6f;
+}
+
 #zero {
   flex: 2 1 50%;
 }
