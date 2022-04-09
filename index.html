@@ -15,37 +15,37 @@
     <div class="title">CALCULATOR</div>
     <div class="calculator">
       <div class="row">
-        <input type="text" id="input" value="0" readonly>
+        <input type="text" id="display" placeholder="" maxlength="16" readonly>
       </div>
       <div class="keys">
         <div class="row">
-          <button class="btn func" id="clear">AC</button>
-          <button class="btn func" id="sign">&plus;/&minus;</button>
-          <button class="btn func" id="percent">&percnt;</button>
-          <button class="btn op" id="divide">&divide;</button>
+          <button class="btn func" id="clear" data-action="clear">AC</button>
+          <button class="btn func" id="sign" data-action="sign">&plus;/&minus;</button>
+          <button class="btn func" id="percent" data-action="percent">&percnt;</button>
+          <button class="btn op" id="divide" data-action="divide">&divide;</button>
         </div>
         <div class="row">
           <button class="btn num" id="seven">7</button>
           <button class="btn num" id="eight">8</button>
           <button class="btn num" id="nine">9</button>
-          <button class="btn op" id="multiply">&times;</button>
+          <button class="btn op" id="multiply" data-action="multiply">&times;</button>
         </div>
         <div class="row">
           <button class="btn num" id="four">4</button>
           <button class="btn num" id="five">5</button>
           <button class="btn num" id="six">6</button>
-          <button class="btn op" id="minus">&minus;</button>
+          <button class="btn op" id="minus" data-action="subtract">&minus;</button>
         </div>
         <div class="row">
           <button class="btn num" id="one">1</button>
           <button class="btn num" id="two">2</button>
           <button class="btn num" id="three">3</button>
-          <button class="btn op" id="plus">&plus;</button>
+          <button class="btn op" id="plus" data-action="add">&plus;</button>
         </div>
         <div class="row">
           <button class="btn num" id="zero">0</button>
           <button class="btn num" id="dot">.</button>
-          <button class="btn op" id="equals">&equals;</button>
+          <button class="btn op" id="equals" data-action="equals">&equals;</button>
         </div>
       </div>
     </div>
