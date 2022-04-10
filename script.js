@@ -24,12 +24,16 @@ function operate(operator, a, b) {
   switch (operator) {
     case "add":
       return add(a, b);
+      break;
     case "subtract":
       return subtract(a, b);
+      break;
     case "multiply":
       return multiply(a, b);
+      break;
     case "divide":
       return divide(a, b);
+      break;
   }
 }
 
@@ -38,6 +42,7 @@ function clearMemory() {
   firstOperand = "";
   secondOperand = "";
   operator = "";
+  operatorLastPressed = false;
   updateDisplay();
 }
 
@@ -100,7 +105,7 @@ function inputOperator(op) {
     firstOperand = displayValue;
     operator = op;
     secondOperand = "";
-  } else if (op === "equals" && operator !== "") {
+  } else if (op === "equals" && operator !== "" && operator !== "equals") {
     secondOperand = displayValue;
     displayValue = operate(
       operator,
