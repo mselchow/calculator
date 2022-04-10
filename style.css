@@ -67,6 +67,10 @@ body {
   filter: brightness(80%);
 }
 
+.selected {
+  filter: brightness(80%);
+}
+
 .func {
   background-color: #587792;
   color: white;

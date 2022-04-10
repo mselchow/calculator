@@ -2,6 +2,7 @@ let displayValue = "0";
 let firstOperand = "";
 let secondOperand = "";
 let operator = "";
+let operatorLastPressed = false;
 
 function add(a, b) {
   return a + b;
@@ -47,7 +48,10 @@ function updateDisplay() {
 updateDisplay();
 
 function inputDigit(digit) {
-  if (displayValue === "0") {
+  if (operatorLastPressed) {
+    operatorLastPressed = false;
+    displayValue = digit;
+  } else if (displayValue === "0") {
     displayValue = digit;
   } else {
     displayValue += digit;
@@ -75,6 +79,37 @@ function changeSign() {
 function inputPercent() {
   if (displayValue !== "0") {
     displayValue = displayValue / 100;
+  }
+  updateDisplay();
+}
+
+function inputOperator(op) {
+  operatorLastPressed = true;
+  if (firstOperand === "") {
+    firstOperand = displayValue;
+    operator = op;
+  } else if (operator === "") {
+    operator = op;
+  } else if (op !== "equals") {
+    secondOperand = displayValue;
+    displayValue = operate(
+      operator,
+      Number(firstOperand),
+      Number(secondOperand)
+    );
+    firstOperand = displayValue;
+    operator = op;
+    secondOperand = "";
+  } else if (op === "equals" && operator !== "") {
+    secondOperand = displayValue;
+    displayValue = operate(
+      operator,
+      Number(firstOperand),
+      Number(secondOperand)
+    );
+    firstOperand = displayValue;
+    secondOperand = "";
+    operator = "";
   }
   updateDisplay();
 }
@@ -110,26 +145,6 @@ document.querySelector(".calculator").addEventListener("click", function (e) {
 
   // Handle operators
   else if (target.classList.contains("op")) {
-    if (operator === "") {
-      firstOperand = parseFloat(displayValue);
-      operator = action;
-    } else {
-      secondOperand = parseFloat(displayValue);
-      displayValue = operate(operator, firstOperand, secondOperand);
-      firstOperand = displayValue;
-      operator = target.dataset.action;
-    }
-    updateDisplay();
-  }
-
-  // Handle others
-  else if (action === "clear") {
-    clearMemory();
-  } else if (action === "equals") {
-    secondOperand = parseFloat(displayValue);
-    displayValue = operate(operator, firstOperand, secondOperand);
-    firstOperand = displayValue;
-    operator = "";
-    updateDisplay();
+    inputOperator(action);
   }
 });
