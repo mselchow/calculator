@@ -62,6 +62,23 @@ function inputDecimal() {
   updateDisplay();
 }
 
+function changeSign() {
+  if (displayValue !== "0") {
+    displayValue =
+      displayValue.charAt(0) === "-"
+        ? displayValue.substring(1)
+        : "-" + displayValue;
+  }
+  updateDisplay();
+}
+
+function inputPercent() {
+  if (displayValue !== "0") {
+    displayValue = displayValue / 100;
+  }
+  updateDisplay();
+}
+
 document.querySelector(".calculator").addEventListener("click", function (e) {
   let target = e.target;
   let action = target.dataset.action;
@@ -73,6 +90,21 @@ document.querySelector(".calculator").addEventListener("click", function (e) {
       inputDecimal();
     } else {
       inputDigit(key);
+    }
+  }
+
+  // Handle special functions
+  if (target.classList.contains("func")) {
+    switch (action) {
+      case "clear":
+        clearMemory();
+        break;
+      case "sign":
+        changeSign();
+        break;
+      case "percent":
+        inputPercent();
+        break;
     }
   }
 
