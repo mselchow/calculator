@@ -32,7 +32,12 @@ function operate(operator, a, b) {
       return multiply(a, b);
       break;
     case "divide":
-      return divide(a, b);
+      if (checkForDivideByZero()) {
+        return "Err0r";
+        break;
+      } else {
+        return divide(a, b);
+      }
       break;
   }
 }
@@ -86,6 +91,14 @@ function inputPercent() {
     displayValue = displayValue / 100;
   }
   updateDisplay();
+}
+
+function checkForDivideByZero() {
+  if (secondOperand === "0" && operator === "divide") {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function inputOperator(op) {
