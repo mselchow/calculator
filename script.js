@@ -46,77 +46,58 @@ function updateDisplay() {
 
 updateDisplay();
 
-// document.querySelector(".calculator").addEventListener("click", function (e) {
-//   let target = e.target;
-//   if (target.matches("button")) {
-//     let action = target.dataset.action;
-//     let key = target.textContent;
+function inputDigit(digit) {
+  if (displayValue === "0") {
+    displayValue = digit;
+  } else {
+    displayValue += digit;
+  }
+  updateDisplay();
+}
 
-//     // Check for digits/decimal
-//     if (!action) {
-//       if (previousAction === "operator") {
-//         previousValue = displayValue;
-//         displayValue = "";
-//         previousAction = "digit";
-//       }
-//       if (key === ".") {
-//         if (!displayValue.includes(".")) {
-//           displayValue += key;
-//         }
-//       } else if (key === "0") {
-//         if (!displayValue.startsWith("0") || displayValue.length > 1) {
-//           displayValue += key;
-//         }
-//       } else if (displayValue.includes(".")) {
-//         if (displayValue.length == 1) {
-//           displayValue = "0" + displayValue + key;
-//         } else {
-//           displayValue += key;
-//         }
-//       } else {
-//         displayValue += key;
-//       }
-//     }
+function inputDecimal() {
+  if (!displayValue.includes(".")) {
+    displayValue += ".";
+  }
+  updateDisplay();
+}
 
-//     // Check for actions
-//     else if (action === "clear") {
-//       displayValue = "";
-//       clearMemory();
-//     } else if (action === "sign") {
-//       displayValue = multiply(displayValue, -1);
-//       clearMemory();
-//     } else if (action === "percent") {
-//       let result = operate("divide", parseFloat(displayValue), 100);
-//       displayValue = result.toString();
-//       clearMemory();
-//     } else if (
-//       action === "add" ||
-//       action === "subtract" ||
-//       action === "multiply" ||
-//       action === "divide" ||
-//       action === "equals"
-//     ) {
-//       if (previousOperator === "") {
-//         previousOperator = action;
-//         previousValue = displayValue;
-//       } else {
-//         let result = operate(
-//           previousOperator,
-//           parseFloat(previousValue),
-//           parseFloat(displayValue)
-//         );
-//         displayValue = result.toString();
+document.querySelector(".calculator").addEventListener("click", function (e) {
+  let target = e.target;
+  let action = target.dataset.action;
+  let key = target.dataset.key;
 
-//         if (action === "equals") {
-//           clearMemory();
-//         } else {
-//           previousOperator = action;
-//           previousValue = displayValue;
-//           displayValue = "";
-//         }
-//       }
-//     }
+  // Handle digits and decimals
+  if (target.classList.contains("num")) {
+    if (key === ".") {
+      inputDecimal();
+    } else {
+      inputDigit(key);
+    }
+  }
 
-//     document.querySelector("#display").value = displayValue;
-//   }
-// });
+  // Handle operators
+  else if (target.classList.contains("op")) {
+    if (operator === "") {
+      firstOperand = parseFloat(displayValue);
+      operator = action;
+    } else {
+      secondOperand = parseFloat(displayValue);
+      displayValue = operate(operator, firstOperand, secondOperand);
+      firstOperand = displayValue;
+      operator = target.dataset.action;
+    }
+    updateDisplay();
+  }
+
+  // Handle others
+  else if (action === "clear") {
+    clearMemory();
+  } else if (action === "equals") {
+    secondOperand = parseFloat(displayValue);
+    displayValue = operate(operator, firstOperand, secondOperand);
+    firstOperand = displayValue;
+    operator = "";
+    updateDisplay();
+  }
+});
